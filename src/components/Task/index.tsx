@@ -8,14 +8,25 @@ interface TaskProps {
   done: boolean;
   taskId: number;
   doneFunction: (taskId: number) => void;
+  deleteFunction: (taskId: number) => void;
 }
 
 const trashIcon = require("../../../assets/trash.png");
 const windowWidth = Dimensions.get("window").width;
 
-const Task = ({ description, taskId, done, doneFunction }: TaskProps) => {
+const Task = ({
+  description,
+  taskId,
+  done,
+  doneFunction,
+  deleteFunction,
+}: TaskProps) => {
   function handleTaskDone(taskId: number) {
     doneFunction(taskId);
+  }
+
+  function handleDeleteTask(taskId: number) {
+    deleteFunction(taskId);
   }
 
   return (
@@ -33,13 +44,15 @@ const Task = ({ description, taskId, done, doneFunction }: TaskProps) => {
         <Text style={styles.task_text}>{description}</Text>
       </View>
       <View style={styles.delete_wrapper}>
-        <Image
-          source={trashIcon}
-          style={{
-            width: 17,
-            height: 17,
-          }}
-        />
+        <TouchableOpacity onPress={() => handleDeleteTask(taskId)}>
+          <Image
+            source={trashIcon}
+            style={{
+              width: 17,
+              height: 17,
+            }}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );

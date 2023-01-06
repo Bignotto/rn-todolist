@@ -46,6 +46,11 @@ export default function Home() {
     );
   }
 
+  function handleDeleteTask(taskId: number) {
+    const filteredTasks = tasks.filter((t) => t.id !== taskId);
+    setTasks(filteredTasks);
+  }
+
   return (
     <View style={styles.container}>
       <Header />
@@ -59,6 +64,7 @@ export default function Home() {
               key={t.id}
               taskId={t.id}
               doneFunction={handleTaskDone}
+              deleteFunction={handleDeleteTask}
             />
           ))}
         </ScrollView>
