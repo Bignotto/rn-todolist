@@ -1,25 +1,33 @@
 import React from "react";
-import { View, Text, Dimensions, Image } from "react-native";
+import { View, Text, Dimensions, Image, TouchableOpacity } from "react-native";
 
 import { styles } from "./styles";
 
 interface TaskProps {
   description: string;
   done: boolean;
+  taskId: number;
+  doneFunction: (taskId: number) => void;
 }
 
 const trashIcon = require("../../../assets/trash.png");
 const windowWidth = Dimensions.get("window").width;
 
-const Task = ({ description, done }: TaskProps) => {
+const Task = ({ description, taskId, done, doneFunction }: TaskProps) => {
+  function handleTaskDone(taskId: number) {
+    doneFunction(taskId);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.cehck_box_wrapper}>
-        {done ? (
-          <Text style={styles.check_box_text_done}>☒</Text>
-        ) : (
-          <Text style={styles.check_box_text}>☐</Text>
-        )}
+        <TouchableOpacity onPress={() => handleTaskDone(taskId)}>
+          {done ? (
+            <Text style={styles.check_box_text_done}>☒</Text>
+          ) : (
+            <Text style={styles.check_box_text}>☐</Text>
+          )}
+        </TouchableOpacity>
       </View>
       <View style={styles.task_wrapper}>
         <Text style={styles.task_text}>{description}</Text>

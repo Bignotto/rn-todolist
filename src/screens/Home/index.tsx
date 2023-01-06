@@ -15,15 +15,35 @@ export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   function handleAddTask(task: string) {
-    console.log(tasks.length);
-
     const newTask: Task = {
       id: Date.now(),
       done: false,
       description: task,
     };
 
-    setTasks((t) => [...t, newTask]);
+    const undoneTasks = tasks.filter((t) => t.done === false);
+    undoneTasks.push(newTask);
+
+    const doneTasks = tasks.filter((t) => t.done === true);
+
+    setTasks(undoneTasks.concat(doneTasks));
+  }
+
+  function handleTaskDone(taskId: number) {
+    const filteredTasks = tasks.filter((t) => t.id !== taskId);
+    const [theTask] = tasks.filter((t) => t.id === taskId);
+
+    filteredTasks.push({
+      description: theTask.description,
+      done: !theTask.done,
+      id: theTask.id,
+    });
+
+    setTasks(
+      filteredTasks
+        .filter((t) => t.done === false)
+        .concat(filteredTasks.filter((t) => t.done === true))
+    );
   }
 
   return (
@@ -33,7 +53,13 @@ export default function Home() {
         <TaskInput addTaskFunction={handleAddTask} />
         <ScrollView>
           {tasks.map((t) => (
-            <Task description={t.description} done={t.done} key={t.id} />
+            <Task
+              description={t.description}
+              done={t.done}
+              key={t.id}
+              taskId={t.id}
+              doneFunction={handleTaskDone}
+            />
           ))}
         </ScrollView>
       </View>
