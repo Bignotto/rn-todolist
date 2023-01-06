@@ -1,5 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { theme } from "../../global/theme";
+
+const windowWidth = Dimensions.get("window").width;
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,7 +10,7 @@ export const styles = StyleSheet.create({
   },
 
   content: {
-    flex: 1,
+    flex: windowWidth,
     padding: 24,
     marginTop: -50,
   },

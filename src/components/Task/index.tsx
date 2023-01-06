@@ -1,29 +1,40 @@
-//import liraries
-import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from "react";
+import { View, Text, Dimensions, Image } from "react-native";
 
-// create a component
-const Task = () => {
+import { styles } from "./styles";
+
+interface TaskProps {
+  description: string;
+  done: boolean;
+}
+
+const trashIcon = require("../../../assets/trash.png");
+const windowWidth = Dimensions.get("window").width;
+
+const Task = ({ description, done }: TaskProps) => {
   return (
     <View style={styles.container}>
-      <View>check box</View>
-      <View>
-        <Text>Task</Text>
+      <View style={styles.cehck_box_wrapper}>
+        {done ? (
+          <Text style={styles.check_box_text_done}>☒</Text>
+        ) : (
+          <Text style={styles.check_box_text}>☐</Text>
+        )}
       </View>
-      <View>delete btn</View>
+      <View style={styles.task_wrapper}>
+        <Text style={styles.task_text}>{description}</Text>
+      </View>
+      <View style={styles.delete_wrapper}>
+        <Image
+          source={trashIcon}
+          style={{
+            width: 17,
+            height: 17,
+          }}
+        />
+      </View>
     </View>
   );
 };
 
-// define your styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#2c3e50",
-  },
-});
-
-//make this component available to the app
 export default Task;
