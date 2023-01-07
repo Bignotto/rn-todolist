@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, Image } from "react-native";
 import Header from "../../components/Header";
 import Task from "../../components/Task";
 import TaskInput from "../../components/TaskInput";
@@ -10,6 +10,8 @@ interface Task {
   done: boolean;
   description: string;
 }
+
+const zeroTaskImage = require("../../../assets/Clipboard.png");
 
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -56,21 +58,46 @@ export default function Home() {
       <Header />
       <View style={styles.content}>
         <TaskInput addTaskFunction={handleAddTask} />
-        <ScrollView>
-          {tasks.map((t) => (
-            <Task
-              description={t.description}
-              done={t.done}
-              key={t.id}
-              taskId={t.id}
-              doneFunction={handleTaskDone}
-              deleteFunction={handleDeleteTask}
-            />
-          ))}
-        </ScrollView>
+        <View style={styles.counters_wrapper}>
+          <View style={styles.total_counter_wrapper}>
+            <Text style={styles.total_counter_text}>Criadas</Text>
+            <Text style={styles.counter_text}>{tasks.length}</Text>
+          </View>
+          <View style={styles.total_done_wrapper}>
+            <Text style={styles.total_done_text}>Concluídas</Text>
+            <Text style={styles.counter_text}>
+              {tasks.filter((t) => t.done === true).length}
+            </Text>
+          </View>
+        </View>
+        {tasks.length > 0 ? (
+          <ScrollView>
+            {tasks.map((t) => (
+              <Task
+                description={t.description}
+                done={t.done}
+                key={t.id}
+                taskId={t.id}
+                doneFunction={handleTaskDone}
+                deleteFunction={handleDeleteTask}
+              />
+            ))}
+          </ScrollView>
+        ) : (
+          <>
+            <View style={styles.line} />
+            <View style={styles.zero_task_wrapper}>
+              <Image source={zeroTaskImage} />
+              <Text style={styles.zero_task_text_bold}>
+                Você ainda não tem tarefas cadastradas.
+              </Text>
+              <Text style={styles.zero_task_text}>
+                Crie tarefas e organize seus itens a fazer.
+              </Text>
+            </View>
+          </>
+        )}
       </View>
-
-      <Text style={styles.text}>This is home screen</Text>
     </View>
   );
 }
