@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "rn-todolist",
+    "name": "Ignite ToDo List",
     "slug": "rn-todolist",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,21 +9,19 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1A1A1A"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#1A1A1A"
       }
     },
     "web": {
